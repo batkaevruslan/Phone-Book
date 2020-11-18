@@ -1,0 +1,17 @@
+type: code
+custom_name: Banana!
+files:
+- name: src/Main.kt
+  visible: true
+  text: |-
+    fun solution(strings: MutableList<String>, str: String): MutableList<String> {
+        // put your code here
+    }
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/11040#comment
+status: Solved
+feedback:
+  message: <html>Correct solution<br/><br/>Continue on <a href="https://hyperskill.org/learn/step/11040#comment">JetBrains
+    Academy</a></html>
+  time: Thu, 12 Nov 2020 11:55:38 UTC
+record: -1
