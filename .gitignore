@@ -1,6 +1,11 @@
 /build/
 /.gradle/
+**/*.class
 
 # Gradle:
 .idea/libraries
 /.idea/workspace.xml
+
+course-remote-info.yaml
+**/task-remote-info.yaml
+**/task/out/**
