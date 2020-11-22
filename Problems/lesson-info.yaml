@@ -11,3 +11,7 @@ content:
 - Banana_
 - Positive, Negative or Zero
 - Printing arguments
+- Polynomial
+- Handle arithmetic exception
+- Handle string exception
+- Handle number format exception
