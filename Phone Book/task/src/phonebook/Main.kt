@@ -9,9 +9,10 @@ fun main() {
     val allPhoneRecords:List<PhoneRecord> = getAllPhoneRecords()
     val phoneNamesToFind:List<String> = getRecordsToSearch()
 
-    // val linearSearchTime = performLinearSearch(allPhoneRecords, phoneRecordsToFind)
-    // println()
-    // performJumpSearch(allPhoneRecords, phoneRecordsToFind, linearSearchTime)
+    val linearSearchTime = performLinearSearch(allPhoneRecords, phoneNamesToFind)
+    println()
+    performJumpSearch(allPhoneRecords, phoneNamesToFind, linearSearchTime)
+    println()
     performBinarySearch(allPhoneRecords, phoneNamesToFind)
 }
 
@@ -22,7 +23,7 @@ fun performBinarySearch(allPhoneRecords: List<PhoneRecord>, phoneNamesToFind: Li
     doQuickSort(sortedRecords, 0, sortedRecords.lastIndex)
     val sortEndTime = System.currentTimeMillis()
 
-    var totalFoundRecords:Int = 0
+    var totalFoundRecords = 0
     for (name in phoneNamesToFind) {
         if (doBinarySearch(sortedRecords, name, 0, sortedRecords.lastIndex) != -1) {
             totalFoundRecords++
@@ -80,20 +81,20 @@ private fun swap(records: Array<PhoneRecord>, i: Int, y: Int) {
     records[y] = temp
 }
 
-private fun performLinearSearch(allPhoneRecords: List<String>, phoneRecordsToFind: List<String>): Long {
+private fun performLinearSearch(allPhoneRecords: List<PhoneRecord>, phoneNamesToFind: List<String>): Long {
     println("Start searching (linear search)...")
     val startTime = System.currentTimeMillis()
-    var totalFoundRecords: Int = doLinearSearch(allPhoneRecords, phoneRecordsToFind)
+    val totalFoundRecords: Int = doLinearSearch(allPhoneRecords, phoneNamesToFind)
     val endTime = System.currentTimeMillis()
-    println("Found $totalFoundRecords / ${phoneRecordsToFind.size} entries. Time taken: ${formatTime(endTime - startTime)}")
+    println("Found $totalFoundRecords / ${phoneNamesToFind.size} entries. Time taken: ${formatTime(endTime - startTime)}")
     return endTime - startTime
 }
 
-private fun doLinearSearch(allPhoneRecords: List<String>, namesToFind: List<String>): Int {
-    var totalFoundRecords:Int = 0
+private fun doLinearSearch(allPhoneRecords: List<PhoneRecord>, namesToFind: List<String>): Int {
+    var totalFoundRecords = 0
     for (name in namesToFind) {
         for (nameWithPhone in allPhoneRecords) {
-            if (nameWithPhone.contains(name)) {
+            if (nameWithPhone.person == name) {
                 totalFoundRecords++
                 break
             }
@@ -102,7 +103,7 @@ private fun doLinearSearch(allPhoneRecords: List<String>, namesToFind: List<Stri
     return totalFoundRecords
 }
 
-fun performJumpSearch(allPhoneRecords: List<String>, phoneRecordsToFind: List<String>, linearSearchTime: Long): Unit {
+fun performJumpSearch(allPhoneRecords: List<PhoneRecord>, phoneNamesToFind: List<String>, linearSearchTime: Long) {
     println("Start searching (bubble sort + jump search)...")
     val startTime = System.currentTimeMillis()
     val sortedRecords = allPhoneRecords.toMutableList()
@@ -113,7 +114,7 @@ fun performJumpSearch(allPhoneRecords: List<String>, phoneRecordsToFind: List<St
             break
         }
         for (y in i until sortedRecords.size) {
-            if (sortedRecords[i] > sortedRecords[y]) {
+            if (sortedRecords[i].person > sortedRecords[y].person) {
                 val temp = sortedRecords[i]
                 sortedRecords[i] = sortedRecords[y]
                 sortedRecords[y] = temp
@@ -124,16 +125,16 @@ fun performJumpSearch(allPhoneRecords: List<String>, phoneRecordsToFind: List<St
     var totalFoundRecords = 0
     if (sortCompleted) {
         val jumpSize = floor(sqrt(sortedRecords.size.toDouble())).toInt()
-        for (nameToFind in phoneRecordsToFind) {
-            var previousBlockStartIndex = 0
+        for (nameToFind in phoneNamesToFind) {
+            var previousBlockStartIndex: Int
             var nextBlockStartIndex = 0
             var isNameFound = false
             for (i in 0 until sortedRecords.size step jumpSize) {
                 previousBlockStartIndex = nextBlockStartIndex
                 nextBlockStartIndex = max(i, sortedRecords.size - 1)
-                if (!isNameFound && sortedRecords[nextBlockStartIndex] >= nameToFind) {
+                if (!isNameFound && sortedRecords[nextBlockStartIndex].person >= nameToFind) {
                     for (y in previousBlockStartIndex..nextBlockStartIndex) {
-                        if (sortedRecords[y] == nameToFind){
+                        if (sortedRecords[y].person == nameToFind){
                             isNameFound = true
                             totalFoundRecords++
                             break
@@ -143,13 +144,13 @@ fun performJumpSearch(allPhoneRecords: List<String>, phoneRecordsToFind: List<St
             }
         }
         val searchEndTime = System.currentTimeMillis()
-        println("Found $totalFoundRecords / ${phoneRecordsToFind.size} entries. Time taken: ${formatTime(searchEndTime - startTime)}")
+        println("Found $totalFoundRecords / ${phoneNamesToFind.size} entries. Time taken: ${formatTime(searchEndTime - startTime)}")
         println("Sorting time: ${formatTime(sortEndTime - startTime)}")
         println("Searching time: ${formatTime(searchEndTime - sortEndTime)}")
     } else {
-        var totalFoundRecords = doLinearSearch(allPhoneRecords, phoneRecordsToFind)
+        totalFoundRecords = doLinearSearch(allPhoneRecords, phoneNamesToFind)
         val searchEndTime = System.currentTimeMillis()
-        println("Found $totalFoundRecords / ${phoneRecordsToFind.size} entries. Time taken: ${formatTime(searchEndTime - startTime)}")
+        println("Found $totalFoundRecords / ${phoneNamesToFind.size} entries. Time taken: ${formatTime(searchEndTime - startTime)}")
         println("Sorting time: ${formatTime(sortEndTime - startTime)} - STOPPED, moved to linear search")
         println("Searching time: ${formatTime(searchEndTime - sortEndTime)}")
     }
@@ -165,7 +166,7 @@ private fun shouldStopSorting(linearSearchTime: Long, startTime: Long): Boolean 
 private fun getRecordsToSearch() = File("D:\\find.txt").readLines()
 
 private fun getAllPhoneRecords(): List<PhoneRecord> {
-    var allPhoneRecords = mutableListOf<PhoneRecord>()
+    val allPhoneRecords = mutableListOf<PhoneRecord>()
     File("D:\\directory.txt").forEachLine {
         val firstSpaceIndex = it.indexOf(" ")
         val record = PhoneRecord()
