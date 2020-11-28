@@ -153,6 +153,56 @@ files:
         }
     }
   learner_created: false
+- name: src/phonebook/HashTable.kt
+  visible: true
+  text: |-
+    package phonebook
+
+    import kotlin.math.abs
+
+    class HashTable(private val size: Int) {
+        private val items: Array<String?> = Array<String?>(size, init = { _ -> null})
+
+        private fun getHashCode(key: String): Int {
+            var hashValue = 0;
+            for (index in key.indices) {
+                hashValue = (hashValue * 31 + key[index].toInt())
+            }
+            return hashValue
+        }
+
+        private fun findElementIndex(key: String): Int {
+            val hashCode = abs(getHashCode(key))
+            var hash = hashCode % size
+
+            while (items[hash] != null && items[hash] != key) {
+                hash = (hash + 1) % size
+
+                if (hash == hashCode % size) {
+                    return -1
+                }
+            }
+            return hash
+        }
+
+        fun put(key:String, value: String) {
+            val index = findElementIndex(key)
+            items[index] = value
+        }
+
+        fun get(key:String): String? {
+            val index = findElementIndex(key)
+            if (index == -1) {
+                return null
+            }
+            return items[index]
+        }
+    }
+  learner_created: true
 feedback_link: https://hyperskill.org/projects/86/stages/479/implement#comment
-status: Unchecked
+status: Solved
+feedback:
+  message: Congratulations! Continue on <a href="https://hyperskill.org/projects/86/stages/479/implement">JetBrains
+    Academy</a>
+  time: Sat, 28 Nov 2020 12:18:29 UTC
 record: -1

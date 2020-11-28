@@ -71,6 +71,13 @@ files:
     \ + \"ms\");\n        }\n        \n        return CheckResult.correct();\n   \
     \ }\n}\n"
   learner_created: false
+- name: src/phonebook/HashTable.kt
+  visible: true
+  learner_created: true
 feedback_link: https://hyperskill.org/projects/86/stages/478/implement#comment
-status: Unchecked
+status: Solved
+feedback:
+  message: Congratulations! Continue on <a href="https://hyperskill.org/projects/86/stages/478/implement">JetBrains
+    Academy</a>
+  time: Sun, 22 Nov 2020 19:49:32 UTC
 record: 3

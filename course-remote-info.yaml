@@ -3,7 +3,7 @@ hyperskill_project:
   ide_files: https://stepik.org/media/attachments/lesson/270527/additional_files.json
   is_template_based: false
   use_ide: true
-update_date: Sun, 22 Nov 2020 09:14:33 UTC
+update_date: Sat, 28 Nov 2020 10:21:00 UTC
 stages:
 - id: 476
   step: 7748
@@ -13,10 +13,10 @@ stages:
   is_completed: true
 - id: 478
   step: 7750
-  is_completed: false
+  is_completed: true
 - id: 479
   step: 7751
-  is_completed: false
+  is_completed: true
 topics:
   0:
   - title: Units of information
@@ -87,6 +87,8 @@ topics:
     theory_id: 4547
   - title: Arrays
     theory_id: 4564
+  - title: String arrays
+    theory_id: 11477
   - title: If expression
     theory_id: 4625
   - title: Repeating blocks
@@ -103,6 +105,8 @@ topics:
     theory_id: 10996
   - title: Declaring classes
     theory_id: 6200
+  - title: Errors in programs
+    theory_id: 11559
   - title: What is an exception
     theory_id: 7243
   - title: Reading files
@@ -120,14 +124,14 @@ topics:
     theory_id: 4502
   - title: The Math library
     theory_id: 4563
-  - title: Writing files
-    theory_id: 9710
   - title: Introduction to collections
     theory_id: 10390
   - title: List
     theory_id: 10730
   - title: Mutable List
     theory_id: 11032
+  - title: Writing files
+    theory_id: 9710
   2:
   - title: Recursion basics
     theory_id: 5984

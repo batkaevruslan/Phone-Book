@@ -8,12 +8,34 @@ import kotlin.math.sqrt
 fun main() {
     val allPhoneRecords:List<PhoneRecord> = getAllPhoneRecords()
     val phoneNamesToFind:List<String> = getRecordsToSearch()
-
     val linearSearchTime = performLinearSearch(allPhoneRecords, phoneNamesToFind)
     println()
     performJumpSearch(allPhoneRecords, phoneNamesToFind, linearSearchTime)
     println()
     performBinarySearch(allPhoneRecords, phoneNamesToFind)
+    println()
+    performHashBasedSearch(allPhoneRecords, phoneNamesToFind)
+}
+
+fun performHashBasedSearch(allPhoneRecords: List<PhoneRecord>, phoneNamesToFind: List<String>) {
+    println("Start searching (hash table)...")
+    val startTime = System.currentTimeMillis()
+    val phoneRecords = HashTable((allPhoneRecords.size * 1.25).toInt())
+    //val phoneRecords = HashMap<String, String>()
+    for (record in allPhoneRecords) {
+        phoneRecords.put(record.person, record.phone)
+    }
+    val hashTableCreationEndTime = System.currentTimeMillis()
+    var totalFoundRecords = 0
+    for (name in phoneNamesToFind) {
+        if (phoneRecords.get(name) != null) {
+            totalFoundRecords++
+        }
+    }
+    val searchEndTime = System.currentTimeMillis()
+    println("Found $totalFoundRecords / ${phoneNamesToFind.size} entries. Time taken: ${formatTime(searchEndTime - startTime)}")
+    println("Creating time: ${formatTime(hashTableCreationEndTime - startTime)}")
+    println("Searching time: ${formatTime(searchEndTime - hashTableCreationEndTime)}")
 }
 
 fun performBinarySearch(allPhoneRecords: List<PhoneRecord>, phoneNamesToFind: List<String>) {

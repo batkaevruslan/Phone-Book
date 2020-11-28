@@ -9,3 +9,4 @@
 course-remote-info.yaml
 **/task-remote-info.yaml
 **/task/out/**
+/Phone Book/task/build/**
